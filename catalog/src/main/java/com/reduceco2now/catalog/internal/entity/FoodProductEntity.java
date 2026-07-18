@@ -43,7 +43,7 @@ public class FoodProductEntity {
     }
 
 
-    static FoodProductEntity newFrom(FoodUpsert u) {
+   Public static FoodProductEntity newFrom(FoodUpsert u) {
         FoodProductEntity e = new FoodProductEntity();
         e.barcode = u.barcode();
         e.name = u.name();
@@ -53,7 +53,7 @@ public class FoodProductEntity {
         return e;
     }
 
-    FoodProductEntity updateFrom(FoodUpsert u) {
+   Public FoodProductEntity updateFrom(FoodUpsert u) {
         this.name = u.name();
         this.brand = u.brand();
         this.categoryCode = u.categoryCode();
