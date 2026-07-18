@@ -3,8 +3,8 @@ spring:
     name: co2diet-backend
   datasource:
     url: jdbc:postgresql://localhost:5432/co2diet
-    username: co2diet
-    password: co2diet
+    username: ${DB_USER:co2diet}
+    password: ${DB_PASSWORD:}
   jpa:
     hibernate:
       ddl-auto: validate
