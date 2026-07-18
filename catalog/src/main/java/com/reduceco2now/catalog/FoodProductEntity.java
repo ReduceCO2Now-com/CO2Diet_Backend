@@ -1,7 +1,5 @@
-package com.reduceco2now.catalog.internal.entity;
+package com.reduceco2now.catalog;
 
-import com.reduceco2now.catalog.Food;
-import com.reduceco2now.catalog.FoodUpsert;
 import jakarta.persistence.*;
 
 

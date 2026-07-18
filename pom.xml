@@ -28,7 +28,6 @@
     <modules>
         <module>shared</module>
         <module>catalog</module>
-                <module>catalog</module>
         <module>app</module>
     </modules>
 
