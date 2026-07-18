@@ -1,0 +1,12 @@
+# Build artifacts
+target/
+*.jar
+*.class
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
