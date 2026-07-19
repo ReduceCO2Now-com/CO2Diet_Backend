@@ -28,7 +28,7 @@
     <modules>
         <module>shared</module>
         <module>catalog</module>
-                <module>catalog</module>
+        <module>ingestion</module>
         <module>app</module>
     </modules>
 
