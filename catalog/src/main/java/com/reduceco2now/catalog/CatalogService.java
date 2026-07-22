@@ -1,11 +1,5 @@
-package com.reduceco2now.catalog.internal;
+package com.reduceco2now.catalog;
 
-import com.reduceco2now.catalog.CatalogCommand;
-import com.reduceco2now.catalog.CatalogQuery;
-import com.reduceco2now.catalog.Food;
-import com.reduceco2now.catalog.FoodUpsert;
-import com.reduceco2now.catalog.internal.entity.FoodProductEntity;
-import com.reduceco2now.catalog.internal.repository.FoodProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

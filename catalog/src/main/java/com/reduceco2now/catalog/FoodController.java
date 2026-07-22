@@ -1,7 +1,5 @@
-package com.reduceco2now.catalog.internal.controller;
+package com.reduceco2now.catalog;
 
-import com.reduceco2now.catalog.CatalogQuery;
-import com.reduceco2now.catalog.Food;
 import com.reduceco2now.shared.error.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

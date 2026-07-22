@@ -1,6 +1,5 @@
-package com.reduceco2now.catalog.internal.repository;
+package com.reduceco2now.catalog;
 
-import com.reduceco2now.catalog.internal.entity.FoodProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
