@@ -1,5 +1,7 @@
 package com.reduceco2now.ingestion.internal.usda;
 
+import java.util.Optional;
+
 import com.reduceco2now.catalog.FoodUpsert;
 import com.reduceco2now.ingestion.FoodSource;
 import com.reduceco2now.ingestion.internal.usda.dto.UsdaFoodDto;
@@ -27,12 +29,8 @@ public class UsdaFoodSource implements FoodSource {
 
         for (UsdaFoodDto dto : client.fetchFoods()) {
 
-            FoodUpsert foodUpsert = mapper.map(dto);
-
-            // Skip malformed entries instead of stopping the batch.
-            if (foodUpsert != null) {
-                foodUpserts.add(foodUpsert);
-            }
+            Optional<FoodUpsert> foodUpsert = mapper.map(dto);
+            foodUpsert.ifPresent(foodUpserts::add);
         }
 
         return foodUpserts;

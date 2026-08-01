@@ -10,17 +10,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record UsdaFoodDto(
 
-        @JsonProperty("gtinUpc")
-        String barcode,
+                @JsonProperty("gtinUpc") String barcode,
 
-        @JsonProperty("description")
-        String name,
+                @JsonProperty("description") String name,
 
-        @JsonProperty("brandOwner")
-        String brand,
+                @JsonProperty("brandOwner") String brand,
 
-        @JsonProperty("dataType")
-        String categoryCode
+                /*
+                 * Intentionally left unmapped because /foods/list does not provide a usable
+                 * category field.
+                 * This allows existing category values from Open Food Facts to be preserved.
+                 */
+                String categoryCode
 
 ) {
 }

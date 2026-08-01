@@ -5,11 +5,10 @@ import com.reduceco2now.ingestion.internal.usda.dto.UsdaFoodDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class UsdaFoodSourceTest {
 
@@ -52,8 +51,8 @@ class UsdaFoodSourceTest {
 
                 when(client.fetchFoods()).thenReturn(List.of(appleDto, orangeDto));
 
-                when(mapper.map(appleDto)).thenReturn(apple);
-                when(mapper.map(orangeDto)).thenReturn(orange);
+                when(mapper.map(appleDto)).thenReturn(Optional.of(apple));
+                when(mapper.map(orangeDto)).thenReturn(Optional.of(orange));
 
                 // Act
                 List<FoodUpsert> result = foodSource.fetchFoods();
@@ -90,8 +89,8 @@ class UsdaFoodSourceTest {
 
                 when(client.fetchFoods()).thenReturn(List.of(appleDto, invalidDto));
 
-                when(mapper.map(appleDto)).thenReturn(apple);
-                when(mapper.map(invalidDto)).thenReturn(null);
+                when(mapper.map(appleDto)).thenReturn(Optional.of(apple));
+                when(mapper.map(invalidDto)).thenReturn(Optional.empty());
 
                 // Act
                 List<FoodUpsert> result = foodSource.fetchFoods();
@@ -133,8 +132,8 @@ class UsdaFoodSourceTest {
 
                 when(client.fetchFoods()).thenReturn(List.of(appleDto, orangeDto));
 
-                when(mapper.map(appleDto)).thenReturn(apple);
-                when(mapper.map(orangeDto)).thenReturn(orange);
+                when(mapper.map(appleDto)).thenReturn(Optional.of(apple));
+                when(mapper.map(orangeDto)).thenReturn(Optional.of(orange));
 
                 // Act
                 foodSource.fetchFoods();

@@ -38,9 +38,11 @@ public class UsdaClient {
                         .queryParam("api_key", apiKey)
                         .queryParam("pageSize", PAGE_SIZE)
                         .queryParam("pageNumber", PAGE_NUMBER)
+                        .queryParam("dataType", "Branded")
                         .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<List<UsdaFoodDto>>() {});
+                .body(new ParameterizedTypeReference<List<UsdaFoodDto>>() {
+                });
 
         // Return an empty list if the API response has no body.
         return foods != null ? foods : List.of();

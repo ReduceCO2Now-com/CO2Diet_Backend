@@ -4,9 +4,9 @@ import com.reduceco2now.catalog.FoodUpsert;
 import com.reduceco2now.ingestion.internal.usda.dto.UsdaFoodDto;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class UsdaFoodMapperTest {
 
@@ -22,37 +22,77 @@ class UsdaFoodMapperTest {
                 "123456789",
                 "Apple",
                 "Fresh Farms",
-                "Branded"
-        );
+                null);
 
         // Act
-        FoodUpsert result = mapper.map(dto);
+        Optional<FoodUpsert> result = mapper.map(dto);
 
         // Assert
-        assertNotNull(result);
-        assertEquals("123456789", result.barcode());
-        assertEquals("Apple", result.name());
-        assertEquals("Fresh Farms", result.brand());
-        assertEquals("Branded", result.categoryCode());
+        assertTrue(result.isPresent());
+
+        FoodUpsert food = result.get();
+
+        assertEquals("123456789", food.barcode());
+        assertEquals("Apple", food.name());
+        assertEquals("Fresh Farms", food.brand());
+        assertNull(food.categoryCode());
     }
 
     @Test
-    void shouldReturnNullWhenDtoIsNull() {
+    void shouldReturnEmptyWhenDtoIsNull() {
 
-        // Verify that a null DTO is treated as an invalid input.
+        // Verify that a null DTO is treated as invalid input.
 
         // Arrange
         UsdaFoodDto dto = null;
 
         // Act
-        FoodUpsert result = mapper.map(dto);
+        Optional<FoodUpsert> result = mapper.map(dto);
 
         // Assert
-        assertNull(result);
+        assertTrue(result.isEmpty());
     }
 
     @Test
-    void shouldReturnNullWhenNameIsNull() {
+    void shouldReturnEmptyWhenBarcodeIsNull() {
+
+        // Verify that a DTO without a barcode is treated as invalid.
+
+        // Arrange
+        UsdaFoodDto dto = new UsdaFoodDto(
+                null,
+                "Apple",
+                "Fresh Farms",
+                null);
+
+        // Act
+        Optional<FoodUpsert> result = mapper.map(dto);
+
+        // Assert
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void shouldReturnEmptyWhenBarcodeIsBlank() {
+
+        // Verify that a DTO with a blank barcode is treated as invalid.
+
+        // Arrange
+        UsdaFoodDto dto = new UsdaFoodDto(
+                "   ",
+                "Apple",
+                "Fresh Farms",
+                null);
+
+        // Act
+        Optional<FoodUpsert> result = mapper.map(dto);
+
+        // Assert
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void shouldReturnEmptyWhenNameIsNull() {
 
         // Verify that a DTO without a name is treated as invalid.
 
@@ -61,18 +101,17 @@ class UsdaFoodMapperTest {
                 "123456789",
                 null,
                 "Fresh Farms",
-                "Branded"
-        );
+                null);
 
         // Act
-        FoodUpsert result = mapper.map(dto);
+        Optional<FoodUpsert> result = mapper.map(dto);
 
         // Assert
-        assertNull(result);
+        assertTrue(result.isEmpty());
     }
 
     @Test
-    void shouldReturnNullWhenNameIsBlank() {
+    void shouldReturnEmptyWhenNameIsBlank() {
 
         // Verify that a DTO with a blank name is treated as invalid.
 
@@ -81,13 +120,12 @@ class UsdaFoodMapperTest {
                 "123456789",
                 "   ",
                 "Fresh Farms",
-                "Branded"
-        );
+                null);
 
         // Act
-        FoodUpsert result = mapper.map(dto);
+        Optional<FoodUpsert> result = mapper.map(dto);
 
         // Assert
-        assertNull(result);
+        assertTrue(result.isEmpty());
     }
 }
