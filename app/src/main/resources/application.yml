@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/co2diet
     username: co2diet
-    password: co2diet
+    password: co2diettt
   jpa:
     hibernate:
       ddl-auto: validate
