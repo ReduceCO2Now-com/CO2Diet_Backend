@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/co2diet
     username: co2diet
-    password: co2diet
+    password: co2diettt
   jpa:
     hibernate:
       ddl-auto: validate
@@ -14,6 +14,11 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/co2diet
 
 server:
   port: 8080
@@ -21,3 +26,7 @@ server:
 logging:
   level:
     com.reduceco2now: DEBUG
+
+usda:
+  api:
+    key: ${USDA_API_KEY}
