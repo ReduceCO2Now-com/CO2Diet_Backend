@@ -29,6 +29,7 @@
         <module>shared</module>
         <module>catalog</module>
         <module>app</module>
+        <module>co2</module>
     </modules>
 
     <dependencyManagement>
