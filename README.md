@@ -91,7 +91,7 @@ The project starts as a modular monolith using Spring Boot.
 
 ```text
 com.reduceco2now.co2diet
-├── common
+├── shared
 ├── config
 ├── security
 ├── auth
