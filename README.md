@@ -31,63 +31,21 @@ The application helps users:
 
 ## Backend Responsibility
 
-This repository contains the Java backend side of the CO2 Diet application.
+This repository contains the Java backend side of the CO2 Diet application. It manages the food catalog, nutrition data, CO2 impact calculations, food-data synchronization, barcode lookup, sustainable alternatives, legal documents, optional authentication, and food-data contributions.
 
-The backend is responsible for:
-
-* Food catalog management
-* Nutrition data management
-* CO2 impact calculation
-* Food database synchronization with the mobile app
-* Barcode/product lookup support
-* Sustainable food alternatives
-* Legal document and version handling
-* Optional authentication support
-* User feedback and food data contribution handling
-
-By default, sensitive personal data such as daily meals, weight history, and private progress data should remain on the user's device whenever possible.
+Sensitive personal data such as daily meals, weight history, and private progress should remain on the user's device whenever possible.
 
 ## Planned MVP Features
 
-### Food Database
-
-* Search food by name
-* Search food by brand
-* Search food by barcode
-* Store calories and macronutrient data
-* Support offline synchronization with the mobile application
-
-### Nutrition Calculation
-
-* Calculate calories based on portion size
-* Calculate protein, carbohydrates, fat, sugar, fiber, and sodium
-* Provide nutrition values per meal and per serving
-
-### CO2 Impact Calculation
-
-* Estimate CO2 impact per food item
-* Calculate CO2 impact per meal
-* Support daily and weekly CO2 tracking
-* Include confidence level and data source where possible
-
-### Synchronization
-
-* Provide food catalog versioning
-* Allow the mobile app to download updated food and CO2 data
-* Support offline-first usage
-
-### Legal and Privacy
-
-* Terms of Use acceptance
-* Privacy Policy acceptance
-* Health disclaimer acceptance
-* Data export support
-* Data deletion support
-* GDPR-oriented architecture
+* Food search by name, brand, and barcode
+* Nutrition storage and meal calculations
+* CO2 impact estimates per food item and meal
+* Offline-first catalog synchronization
+* Legal acceptance, data export, deletion, and GDPR-oriented architecture
 
 ## Suggested Architecture
 
-The project starts as a modular monolith using Spring Boot.
+The project is a modular Spring Boot monolith:
 
 ```text
 com.reduceco2now.co2diet
@@ -109,44 +67,37 @@ This structure keeps the MVP simple while allowing future migration to microserv
 
 * Java 21
 * Spring Boot
-* Spring Web
-* Spring Data JPA
+* Spring Web and Spring Data JPA
 * Spring Security
 * PostgreSQL
 * Flyway or Liquibase
-* MapStruct
 * Lombok
 * OpenAPI / Swagger
 * Docker
 
+## Open Food Facts Ingestion
+
+The `ingestion` module provides an Open Food Facts (OFF) data source. It fetches one batch of up to 100 products from OFF's v2 search API, sends a custom User-Agent, and maps valid products to normalized `FoodUpsert` records. Malformed products are logged and skipped; unmapped OFF categories are retained and logged for review.
+
+Run the ingestion tests from the repository root:
+
+```bash
+mvn -pl ingestion test
+```
+
 ## Future Improvements
 
 * Barcode scanner integration
-* AI-based nutrition extraction
-* AI-based CO2 estimation
-* Recipe builder
-* Meal planning
+* AI-based nutrition extraction and CO2 estimation
+* Recipe builder and meal planning
 * Wearable integration
-* Community food database contribution
-* Admin moderation panel
+* Community food-data contribution and moderation
 * Advanced analytics and weekly insights
 
 ## Project Status
 
-This project is currently in the initial backend setup phase.
-
-The first development focus is:
-
-1. Define backend architecture
-2. Create package structure
-3. Implement food catalog module
-4. Implement nutrition calculation module
-5. Implement CO2 calculation module
-6. Add synchronization APIs
-7. Add legal and privacy-related endpoints
+The project is in its initial backend setup phase. Current development focuses on backend architecture, package structure, food catalog and nutrition modules, CO2 calculations, synchronization APIs, and legal/privacy endpoints.
 
 ## License
 
-This project is intended to be open source.
-
-The license will be defined later.
+This project is intended to be open source. The license will be defined later.
