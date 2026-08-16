@@ -48,11 +48,17 @@ Sensitive personal data such as daily meals, weight history, and private progres
 The project is a modular Spring Boot monolith:
 
 ```text
-co2diet
-├── shared       Shared domain primitives and errors
-├── catalog      Food products, search, and barcode lookup
-├── ingestion    External food-data ingestion adapters
-└── app          Application configuration and database migrations
+com.reduceco2now.co2diet
+├── shared
+├── config
+├── security
+├── auth
+├── legal
+├── food
+├── nutrition
+├── co2
+├── sync
+└── contribution
 ```
 
 This structure keeps the MVP simple while allowing future migration to microservices if needed.
