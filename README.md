@@ -100,4 +100,4 @@ The project is in its initial backend setup phase. Current development focuses o
 
 ## License
 
-This project is intended to be open source. The license will be defined later.
+The license will be defined later.
