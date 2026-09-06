@@ -30,6 +30,7 @@
         <module>catalog</module>
         <module>app</module>
         <module>co2</module>
+        <module>ingestion</module>
     </modules>
 
     <dependencyManagement>
