@@ -1,5 +1,7 @@
 package com.reduceco2now.ingestion;
 
+import com.reduceco2now.catalog.FoodUpsert;
+
 import java.util.List;
 
 /**
@@ -14,11 +16,6 @@ import java.util.List;
 public interface FoodSource {
 
     /**
-     * @return a short, stable identifier for this source, e.g. {@code "off"}.
-     */
-    String name();
-
-    /**
      * Fetches a single batch of products from the upstream source.
      *
      * <p>This does not guarantee a full sync — callers wanting the entire
@@ -28,5 +25,5 @@ public interface FoodSource {
      * @return the products in this batch, mapped to our normalized shape.
      *         Malformed upstream entries are skipped rather than included.
      */
-    List<FoodUpsert> fetchBatch();
+    List<FoodUpsert> fetchFoods();
 }

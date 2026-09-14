@@ -1,7 +1,7 @@
 package com.reduceco2now.ingestion.internal;
 
+import com.reduceco2now.catalog.FoodUpsert;
 import com.reduceco2now.ingestion.FoodSource;
-import com.reduceco2now.ingestion.FoodUpsert;
 import com.reduceco2now.ingestion.internal.off.OffFoodSource;
 import com.reduceco2now.ingestion.internal.off.OffHttpTransport;
 import com.reduceco2now.ingestion.internal.off.OffProductMapper;
@@ -24,7 +24,7 @@ class OffFoodSourceTest {
     private OffHttpTransport transport;
 
     @Test
-    void fetchBatchReturnsMappedUpsertsAndSkipsMalformedEntries() throws Exception {
+    void fetchFoodsReturnsMappedUpsertsAndSkipsMalformedEntries() throws Exception {
         String json = """
                 {
                   "products": [
@@ -39,11 +39,10 @@ class OffFoodSourceTest {
         OpenFoodFactsClient client = new OpenFoodFactsClient(transport);
         FoodSource source = new OffFoodSource(client, new OffProductMapper());
 
-        List<FoodUpsert> result = source.fetchBatch();
+        List<FoodUpsert> result = source.fetchFoods();
 
-        assertThat(source.name()).isEqualTo("off");
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).externalId()).isEqualTo("1");
+        assertThat(result.get(0).barcode()).isEqualTo("1");
         assertThat(result.get(0).brand()).isEqualTo("Acme");
     }
 }
