@@ -1,8 +1,7 @@
 package com.reduceco2now.ingestion.internal.off;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.reduceco2now.ingestion.FoodUpsert;
-
+import com.reduceco2now.catalog.FoodUpsert;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,33 +9,11 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Maps a single raw Open Food Facts product JSON node into our normalized
- * {@link FoodUpsert}.
- *
- * <p>OFF data is user-contributed and frequently incomplete, so this mapper is
- * deliberately lenient: any product missing a required field is skipped (with
- * a log line) rather than causing the whole batch to fail. Category mapping
- * is similarly best-effort — see {@link #CATEGORY_MAP} — and unmapped
- * categories are logged so they can be reviewed and added later.
- */
 public final class OffProductMapper {
 
     private static final Logger log = LoggerFactory.getLogger(OffProductMapper.class);
-
     public static final String SOURCE_NAME = "off";
 
-    /**
-     * Best-effort mapping from OFF's own {@code categories_tags} taxonomy
-     * (English tags, e.g. {@code en:beverages}) to our internal category
-     * codes. This is intentionally a small starting set covering common
-     * top-level OFF categories — gaps are logged via
-     * {@link #resolveCategoryCode} rather than failing the mapping, so we can
-     * extend this table incrementally as gaps are reported.
-     *
-     * TODO: this table is incomplete — treat log warnings from
-     * resolveCategoryCode as the backlog of gaps to fill in.
-     */
     private static final Map<String, String> CATEGORY_MAP = Map.ofEntries(
             Map.entry("en:beverages", "BEVERAGES"),
             Map.entry("en:sodas", "BEVERAGES"),
@@ -62,12 +39,6 @@ public final class OffProductMapper {
             Map.entry("en:frozen-foods", "FROZEN")
     );
 
-    /**
-     * Maps a single OFF product node.
-     *
-     * @return the mapped {@link FoodUpsert}, or empty if the product is
-     *         missing required fields and should be skipped.
-     */
     public Optional<FoodUpsert> map(JsonNode product) {
         if (product == null || product.isMissingNode() || product.isNull()) {
             log.warn("Skipping OFF product: node was null/missing");
@@ -87,28 +58,12 @@ public final class OffProductMapper {
         }
 
         String brand = firstOf(textOrNull(product, "brands"));
-        String quantity = textOrNull(product, "quantity");
-        String imageUrl = textOrNull(product, "image_url");
-
         List<String> rawCategories = readStringArray(product.get("categories_tags"));
         String categoryCode = resolveCategoryCode(code, rawCategories);
 
-        return Optional.of(new FoodUpsert(
-                code,
-                SOURCE_NAME,
-                name.trim(),
-                brand,
-                categoryCode,
-                quantity,
-                imageUrl,
-                rawCategories
-        ));
+        return Optional.of(new FoodUpsert(code, name.trim(), brand, categoryCode));
     }
 
-    /**
-     * Maps a batch of raw product nodes, skipping (and logging) any that are
-     * malformed rather than propagating a failure for the whole batch.
-     */
     public List<FoodUpsert> mapBatch(List<JsonNode> products) {
         if (products == null || products.isEmpty()) {
             return List.of();
@@ -118,9 +73,6 @@ public final class OffProductMapper {
             try {
                 map(product).ifPresent(result::add);
             } catch (RuntimeException e) {
-                // OFF is user-contributed data. A pathological entry must not
-                // prevent otherwise valid products in the same response from
-                // being ingested.
                 log.warn("Skipping malformed OFF product node", e);
             }
         }

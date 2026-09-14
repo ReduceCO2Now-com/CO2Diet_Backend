@@ -1,6 +1,9 @@
-package com.reduceco2now.ingestion.internal.off;
+package com.reduceco2now.ingestion.internal;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.reduceco2now.ingestion.internal.off.OffApiException;
+import com.reduceco2now.ingestion.internal.off.OffHttpTransport;
+import com.reduceco2now.ingestion.internal.off.OpenFoodFactsClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

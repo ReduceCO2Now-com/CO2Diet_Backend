@@ -1,5 +1,6 @@
-package com.reduceco2now.ingestion.internal.off;
+package com.reduceco2now.ingestion.internal;
 
+import com.reduceco2now.ingestion.internal.off.JdkOffHttpTransport;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

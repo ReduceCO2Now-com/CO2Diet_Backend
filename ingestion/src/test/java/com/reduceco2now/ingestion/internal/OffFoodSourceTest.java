@@ -1,7 +1,11 @@
-package com.reduceco2now.ingestion.internal.off;
+package com.reduceco2now.ingestion.internal;
 
 import com.reduceco2now.ingestion.FoodSource;
 import com.reduceco2now.ingestion.FoodUpsert;
+import com.reduceco2now.ingestion.internal.off.OffFoodSource;
+import com.reduceco2now.ingestion.internal.off.OffHttpTransport;
+import com.reduceco2now.ingestion.internal.off.OffProductMapper;
+import com.reduceco2now.ingestion.internal.off.OpenFoodFactsClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
