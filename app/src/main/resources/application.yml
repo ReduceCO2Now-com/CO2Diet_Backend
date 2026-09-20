@@ -30,3 +30,8 @@ logging:
 usda:
   api:
     key: ${USDA_API_KEY}
+
+off:
+  app-name: ReduceCO2Now
+  app-version: 0.1.0
+  contact-email: ingestion@reduceco2now.com
