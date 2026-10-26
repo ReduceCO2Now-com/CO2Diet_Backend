@@ -7,6 +7,11 @@ import org.springframework.web.client.RestClient;
 import java.util.List;
 
 
+import java.util.List;
+
+/**
+ * Client responsible for communicating with the USDA FoodData Central API.
+ */
 public class UsdaClient {
 
     private static final String BASE_URL = "https://api.nal.usda.gov/fdc/v1";
@@ -21,6 +26,12 @@ public class UsdaClient {
         this.apiKey = apiKey;
     }
 
+    /**
+     * Fetches one batch of foods from the USDA API.
+     *
+     * <p>Filtered to dataType=Branded, since that is the only data type
+     * carrying gtinUpc (barcode) and foodCategory, the fields our mapper needs.
+     */
     public List<UsdaFoodDto> fetchFoods() {
         List<UsdaFoodDto> foods = restClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -32,6 +43,6 @@ public class UsdaClient {
                         .build())
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<UsdaFoodDto>>() {});
-        return foods != null ? foods : List.of();
+        return foods == null ? List.of() : foods;
     }
 }
